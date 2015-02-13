@@ -169,8 +169,10 @@ namespace FiredTVLauncher
         }
 
 		public static void Save ()
-		{
-			var path = Path.Combine (System.Environment.GetFolderPath (System.Environment.SpecialFolder.MyDocuments), "settings2.json");
+		{ 
+            File externalStorage = Environment.getExternalStorageDirectory();
+            absolutePath = externalStorage.getAbsolutePath();
+			var path = Path.Combine (absolutePath, "settings2.json");
             try {
                 File.WriteAllText (path, Newtonsoft.Json.JsonConvert.SerializeObject (Settings.Instance));
                 Log.Debug ("Settings Saved to {0}", path);
@@ -181,8 +183,9 @@ namespace FiredTVLauncher
 
         public static void Load ()
 		{
-			var path = Path.Combine (System.Environment.GetFolderPath (System.Environment.SpecialFolder.MyDocuments), "settings2.json");
-
+            File externalStorage = Environment.getExternalStorageDirectory();
+            absolutePath = externalStorage.getAbsolutePath();
+            var path = Path.Combine (absolutePath, "settings2.json");
             try {
                 Settings.Instance = Newtonsoft.Json.JsonConvert.DeserializeObject <Settings> (File.ReadAllText (path));
                 Log.Debug ("Settings Loaded from {0}", path);
